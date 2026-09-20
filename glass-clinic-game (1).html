@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>🧪 درمانگاه شیشه‌ای</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    --font-display: 'Lalezar', Tahoma, sans-serif;
+    --font-body: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+
+    --panel: #F3E6C8;
+    --panel-deep: #E4CE9C;
+    --ink: #2A1D12;
+    --ink-dim: #7A6248;
+    --btn-text: #2A1D12;
+    --badge-text: #FFF6E4;
+    --wood: #6B4226;
+    --wood-dark: #4A2E1E;
+    --brass: #B8862E;
+    --brass-bright: #D9A94A;
+    --border: rgba(60,40,10,0.18);
+    --shadow: rgba(50,30,10,0.25);
+    --amber: #DB9A2C;
+    --verdigris: #3F8F76;
+    --rose: #C94F65;
+    --eye: #FFF8EC;
+    --bg-1: #F6E6BE;
+    --bg-2: #E7C079;
+    --chip-text: #8A5A18;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --panel: #241811;
+      --panel-deep: #170F0A;
+      --ink: #F0E2C4;
+      --ink-dim: #B39A78;
+      --wood: #1C120B;
+      --wood-dark: #120B06;
+      --brass: #D9A94A;
+      --brass-bright: #F0C878;
+      --border: rgba(240,226,196,0.14);
+      --shadow: rgba(0,0,0,0.55);
+      --amber: #F0AE3E;
+      --verdigris: #57B89A;
+      --rose: #E37088;
+      --bg-1: #17110A;
+      --bg-2: #0D0905;
+      --chip-text: #F0CE84;
+    }
+  }
+  :root[data-theme="dark"] {
+    --panel: #241811;
+    --panel-deep: #170F0A;
+    --ink: #F0E2C4;
+    --ink-dim: #B39A78;
+    --wood: #1C120B;
+    --wood-dark: #120B06;
+    --brass: #D9A94A;
+    --brass-bright: #F0C878;
+    --border: rgba(240,226,196,0.14);
+    --shadow: rgba(0,0,0,0.55);
+    --amber: #F0AE3E;
+    --verdigris: #57B89A;
+    --rose: #E37088;
+    --bg-1: #17110A;
+    --bg-2: #0D0905;
+    --chip-text: #F0CE84;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  body {
+    background: linear-gradient(165deg, var(--bg-1), var(--bg-2));
+    color: var(--ink);
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 400px;
+    background: var(--panel);
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 55px var(--shadow);
+  }
+
+  .cabinet-top {
+    height: 20px;
+    position: relative;
+    background: repeating-linear-gradient(100deg, var(--wood) 0 3px, var(--wood-dark) 3px 6px, var(--wood) 6px 9px);
+  }
+  .cabinet-top::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px; height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--brass-bright), var(--brass));
+    box-shadow: 0 2px 3px rgba(0,0,0,0.35);
+  }
+
+  .content { padding: 18px 18px 16px; }
+  .hidden { display: none !important; }
+  .screen { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+
+  .hero-icon { font-size: 38px; line-height: 1; }
+  h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; letter-spacing: .4px; }
+  .subtitle { margin: 0; color: var(--ink-dim); font-size: 13.5px; line-height: 1.7; max-width: 300px; }
+
+  .chip { background: rgba(184,134,46,0.16); color: var(--chip-text); padding: 5px 14px; border-radius: 999px; font-weight: 700; font-size: 12.5px; }
+
+  .option-group { width: 100%; text-align: right; }
+  .option-label { font-size: 12.5px; color: var(--ink-dim); margin-bottom: 5px; }
+  .option-row { display: flex; gap: 6px; }
+  .opt-btn {
+    flex: 1;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 9px 4px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--panel-deep);
+    color: var(--ink-dim);
+    cursor: pointer;
+  }
+  .opt-btn.active {
+    background: linear-gradient(180deg, var(--brass-bright), var(--brass));
+    color: var(--btn-text);
+    border-color: transparent;
+  }
+
+  .btn-primary {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--btn-text);
+    background: linear-gradient(180deg, var(--brass-bright), var(--brass));
+    border: 3px solid var(--ink);
+    border-radius: 13px;
+    padding: 11px 34px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--wood-dark), 0 9px 18px var(--shadow);
+    margin-top: 4px;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn-primary:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--wood-dark), 0 4px 10px var(--shadow); }
+  .btn-link {
+    background: none; border: none; font-family: var(--font-body); font-size: 12.5px;
+    color: var(--ink-dim); text-decoration: underline; cursor: pointer; padding: 4px;
+  }
+
+  .hud { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; }
+  .hud-item { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
+  .hud-label { font-size: 10.5px; color: var(--ink-dim); }
+  .hud-value { font-family: var(--font-display); font-size: 21px; font-variant-numeric: tabular-nums; }
+  .hud-value.bump { animation: bump .22s ease; }
+  @keyframes bump { 0% { transform: scale(1); } 45% { transform: scale(1.22); } 100% { transform: scale(1); } }
+
+  .next-preview { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .next-caps { display: flex; gap: 3px; direction: ltr; }
+  .next-caps .dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset -2px -2px 3px rgba(0,0,0,0.18); }
+
+  .jar-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; direction: ltr; }
+  .jar-neck { width: 34%; height: 10px; background: var(--panel-deep); border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none; }
+  .jar {
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 1 / 2;
+    background: var(--panel-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px 8px 16px 16px;
+    box-shadow: inset 0 0 26px var(--shadow);
+    padding: 3px;
+  }
+  .jar-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    gap: 1px;
+    width: 100%;
+    height: 100%;
+  }
+  .cell { position: relative; border-radius: 3px; }
+
+  .cell.germ {
+    border-radius: 50%;
+    box-shadow: inset -2px -2px 3px rgba(0,0,0,0.18), inset 2px 2px 2px rgba(255,255,255,0.15);
+  }
+  .cell.pilldot { border-radius: 50%; margin: 18%; width: 64%; height: 64%; box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2); }
+
+  .cell.piece-left   { border-radius: 999px 0 0 999px; }
+  .cell.piece-right  { border-radius: 0 999px 999px 0; }
+  .cell.piece-top    { border-radius: 999px 999px 0 0; }
+  .cell.piece-bottom { border-radius: 0 0 999px 999px; }
+
+  .cell.clearing { animation: clearPop .2s ease forwards; }
+  @keyframes clearPop { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+  .c-amber { background: var(--amber); }
+  .c-verdigris { background: var(--verdigris); }
+  .c-rose { background: var(--rose); }
+
+  .cell.germ.c-amber { background: radial-gradient(circle 2.5px at 35% 40%, var(--eye) 100%, transparent 101%), radial-gradient(circle 2.5px at 65% 40%, var(--eye) 100%, transparent 101%), var(--amber); }
+  .cell.germ.c-verdigris { background: radial-gradient(circle 2.5px at 35% 40%, var(--eye) 100%, transparent 101%), radial-gradient(circle 2.5px at 65% 40%, var(--eye) 100%, transparent 101%), var(--verdigris); }
+  .cell.germ.c-rose { background: radial-gradient(circle 2.5px at 35% 40%, var(--eye) 100%, transparent 101%), radial-gradient(circle 2.5px at 65% 40%, var(--eye) 100%, transparent 101%), var(--rose); }
+
+  .controls { display: flex; gap: 8px; width: 100%; margin-top: 12px; justify-content: center; direction: ltr; }
+  .ctrl-btn {
+    width: 52px; height: 46px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--panel-deep);
+    color: var(--ink);
+    font-size: 19px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--border), 0 6px 12px var(--shadow);
+  }
+  .ctrl-btn:active { transform: translateY(3px); box-shadow: none; }
+
+  .final-score { font-family: var(--font-display); font-size: 44px; color: var(--brass); line-height: 1; }
+  .end-msg { font-size: 14px; color: var(--ink-dim); margin-top: -4px; }
+
+  .mute-btn {
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: 14px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px var(--shadow);
+  }
+
+  @media (max-width: 380px) {
+    .content { padding: 14px 12px 14px; }
+    h1 { font-size: 21px; }
+    .ctrl-btn { width: 46px; height: 42px; font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mute-btn" id="muteBtn" title="بی‌صدا / باصدا">🔊</button>
+
+<div class="app">
+  <div class="cabinet-top"></div>
+  <div class="content">
+
+    <div class="screen" id="startScreen">
+      <div class="hero-icon">🧪</div>
+      <h1>درمانگاه شیشه‌ای</h1>
+      <p class="subtitle">کپسول بنداز، رنگ‌ها رو جفت کن و شیشه رو از میکروب‌ها پاک کن!</p>
+      <div class="chip" id="bestChipStart">🏆 رکورد: 0</div>
+
+      <div class="option-group">
+        <div class="option-label">سختی</div>
+        <div class="option-row" id="diffRow">
+          <button class="opt-btn" data-val="16">آسون</button>
+          <button class="opt-btn active" data-val="28">متوسط</button>
+          <button class="opt-btn" data-val="42">سخت</button>
+        </div>
+      </div>
+      <div class="option-group">
+        <div class="option-label">سرعت</div>
+        <div class="option-row" id="speedRow">
+          <button class="opt-btn" data-val="750">کند</button>
+          <button class="opt-btn active" data-val="480">معمولی</button>
+          <button class="opt-btn" data-val="300">تند</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="startBtn">شروع درمان</button>
+    </div>
+
+    <div class="screen hidden" id="gameScreen">
+      <div class="hud">
+        <div class="hud-item">
+          <span class="hud-label">امتیاز</span>
+          <span class="hud-value" id="scoreValue">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">میکروب</span>
+          <span class="hud-value" id="germValue">0</span>
+        </div>
+        <div class="next-preview">
+          <span class="hud-label">بعدی</span>
+          <div class="next-caps" id="nextCaps"><span class="dot"></span><span class="dot"></span></div>
+        </div>
+      </div>
+
+      <div class="jar-wrap">
+        <div class="jar-neck"></div>
+        <div class="jar"><div class="jar-grid" id="jarGrid"></div></div>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn" id="btnLeft">◀</button>
+        <button class="ctrl-btn" id="btnRotate">🔄</button>
+        <button class="ctrl-btn" id="btnRight">▶</button>
+        <button class="ctrl-btn" id="btnDown">⬇</button>
+      </div>
+    </div>
+
+    <div class="screen hidden" id="endScreen">
+      <div class="hero-icon" id="endIcon">🎉</div>
+      <h1 id="endTitle">شیشه پاک شد!</h1>
+      <p class="end-msg" id="endMsg"></p>
+      <div class="final-score" id="finalScoreEl">0</div>
+      <div class="chip" id="bestChipEnd">🏆 رکورد: 0</div>
+      <button class="btn-primary" id="continueBtn">سطح بعدی</button>
+      <button class="btn-link" id="menuBtn">تغییر سختی و سرعت</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var COLS = 8, ROWS = 16;
+  var COLORS = ['amber', 'verdigris', 'rose'];
+  var ROT_OFFSETS = [
+    { dr: 0, dc: 1 },
+    { dr: -1, dc: 0 },
+    { dr: 0, dc: -1 },
+    { dr: 1, dc: 0 }
+  ];
+  var PIVOT_ROLE = ['left', 'bottom', 'right', 'top'];
+  var OTHER_ROLE = ['right', 'top', 'left', 'bottom'];
+
+  function inBounds(r, c) { return r >= 0 && r < ROWS && c >= 0 && c < COLS; }
+  function emptyGrid() {
+    var g = [];
+    for (var r = 0; r < ROWS; r++) g.push(new Array(COLS).fill(null));
+    return g;
+  }
+  function otherCell(pr, pc, rotIndex) {
+    var off = ROT_OFFSETS[rotIndex];
+    return { r: pr + off.dr, c: pc + off.dc };
+  }
+  function canPlacePiece(grid, pr, pc, rotIndex) {
+    if (!inBounds(pr, pc) || grid[pr][pc]) return false;
+    var o = otherCell(pr, pc, rotIndex);
+    if (!inBounds(o.r, o.c) || grid[o.r][o.c]) return false;
+    return true;
+  }
+  function tryRotateState(grid, pr, pc, rotIndex) {
+    var next = (rotIndex + 1) % 4;
+    if (canPlacePiece(grid, pr, pc, next)) return { pr: pr, pc: pc, rotIndex: next };
+    if (canPlacePiece(grid, pr, pc - 1, next)) return { pr: pr, pc: pc - 1, rotIndex: next };
+    if (canPlacePiece(grid, pr, pc + 1, next)) return { pr: pr, pc: pc + 1, rotIndex: next };
+    return null;
+  }
+  function findMatches(grid) {
+    var matched = new Set();
+    var r, c;
+    for (r = 0; r < ROWS; r++) {
+      var runStart = 0;
+      for (c = 1; c <= COLS; c++) {
+        var prevCell = grid[r][c - 1];
+        var curCell = c < COLS ? grid[r][c] : null;
+        var sameAsPrev = c < COLS && prevCell && curCell && prevCell.color === curCell.color;
+        if (!sameAsPrev) {
+          var runLen = c - runStart;
+          if (runLen >= 4 && grid[r][runStart]) {
+            for (var k = runStart; k < c; k++) matched.add(r + ',' + k);
+          }
+          runStart = c;
+        }
+      }
+    }
+    for (c = 0; c < COLS; c++) {
+      var runStart2 = 0;
+      for (r = 1; r <= ROWS; r++) {
+        var prevCell2 = grid[r - 1][c];
+        var curCell2 = r < ROWS ? grid[r][c] : null;
+        var sameAsPrev2 = r < ROWS && prevCell2 && curCell2 && prevCell2.color === curCell2.color;
+        if (!sameAsPrev2) {
+          var runLen2 = r - runStart2;
+          if (runLen2 >= 4 && grid[runStart2][c]) {
+            for (var k2 = runStart2; k2 < r; k2++) matched.add(k2 + ',' + c);
+          }
+          runStart2 = r;
+        }
+      }
+    }
+    return matched;
+  }
+  function settleGravity(grid) {
+    var changed = true;
+    while (changed) {
+      changed = false;
+      for (var c = 0; c < COLS; c++) {
+        for (var r = ROWS - 2; r >= 0; r--) {
+          var cell = grid[r][c];
+          if (cell && cell.kind === 'pill' && grid[r + 1][c] === null) {
+            grid[r + 1][c] = cell;
+            grid[r][c] = null;
+            changed = true;
+          }
+        }
+      }
+    }
+  }
+
+  var startScreen = document.getElementById('startScreen');
+  var gameScreen = document.getElementById('gameScreen');
+  var endScreen = document.getElementById('endScreen');
+  var jarGridEl = document.getElementById('jarGrid');
+  var scoreValueEl = document.getElementById('scoreValue');
+  var germValueEl = document.getElementById('germValue');
+  var nextCapsEl = document.getElementById('nextCaps');
+  var bestChipStart = document.getElementById('bestChipStart');
+  var bestChipEnd = document.getElementById('bestChipEnd');
+  var finalScoreEl = document.getElementById('finalScoreEl');
+  var endIcon = document.getElementById('endIcon');
+  var endTitle = document.getElementById('endTitle');
+  var endMsg = document.getElementById('endMsg');
+  var startBtn = document.getElementById('startBtn');
+  var continueBtn = document.getElementById('continueBtn');
+  var menuBtn = document.getElementById('menuBtn');
+  var muteBtn = document.getElementById('muteBtn');
+  var diffRow = document.getElementById('diffRow');
+  var speedRow = document.getElementById('speedRow');
+
+  var cellEls = [];
+  for (var rr = 0; rr < ROWS; rr++) {
+    var rowArr = [];
+    for (var cc = 0; cc < COLS; cc++) {
+      var d = document.createElement('div');
+      d.className = 'cell';
+      jarGridEl.appendChild(d);
+      rowArr.push(d);
+    }
+    cellEls.push(rowArr);
+  }
+
+  var grid = emptyGrid();
+  var active = null;
+  var nextColors = [randColor(), randColor()];
+  var germsRemaining = 0;
+  var germCount = 28;
+  var fallDelay = 480;
+  var score = 0;
+  var bestScore = 0;
+  var comboLevel = 0;
+  var gameRunning = false;
+  var muted = false;
+  var fallTimerId = null;
+  var wonLastRound = false;
+
+  try {
+    var saved = localStorage.getItem('glassClinic_bestScore');
+    if (saved !== null) bestScore = parseInt(saved, 10) || 0;
+  } catch (e) { bestScore = 0; }
+  refreshBest();
+
+  function refreshBest() {
+    bestChipStart.textContent = '🏆 رکورد: ' + bestScore;
+    bestChipEnd.textContent = '🏆 رکورد: ' + bestScore;
+  }
+
+  function randColor() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
+
+  var audioCtx = null;
+  function ensureAudio() {
+    if (audioCtx) { if (audioCtx.state === 'suspended') { try { audioCtx.resume(); } catch (e) {} } return; }
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(function () {});
+    } catch (e) { audioCtx = null; }
+  }
+  function playTone(freq, dur, type) {
+    if (muted || !audioCtx) return;
+    try {
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + dur);
+    } catch (e) {}
+  }
+  function playLock() { playTone(300, 0.08, 'square'); }
+  function playClear() { playTone(700 + comboLevel * 120, 0.14, 'triangle'); }
+  function playLose() { playTone(120, 0.4, 'sawtooth'); }
+  function playWin() { playTone(880, 0.3, 'sine'); }
+
+  muteBtn.addEventListener('click', function () {
+    muted = !muted;
+    muteBtn.textContent = muted ? '🔇' : '🔊';
+  });
+
+  function setActiveGroup(row, val) {
+    var btns = row.querySelectorAll('.opt-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  }
+  diffRow.addEventListener('click', function (e) {
+    var btn = e.target.closest('.opt-btn');
+    if (!btn) return;
+    setActiveGroup(diffRow);
+    btn.classList.add('active');
+    germCount = parseInt(btn.dataset.val, 10);
+  });
+  speedRow.addEventListener('click', function (e) {
+    var btn = e.target.closest('.opt-btn');
+    if (!btn) return;
+    setActiveGroup(speedRow);
+    btn.classList.add('active');
+    fallDelay = parseInt(btn.dataset.val, 10);
+  });
+
+  function placeGerms(count) {
+    var placed = 0, attempts = 0;
+    while (placed < count && attempts < count * 50) {
+      attempts++;
+      var r = 6 + Math.floor(Math.random() * (ROWS - 6));
+      var c = Math.floor(Math.random() * COLS);
+      if (grid[r][c]) continue;
+      var color = randColor();
+      var conflict = false;
+      var neigh = [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]];
+      for (var i = 0; i < neigh.length; i++) {
+        var nr = neigh[i][0], nc = neigh[i][1];
+        if (inBounds(nr, nc) && grid[nr][nc] && grid[nr][nc].color === color) { conflict = true; break; }
+      }
+      if (conflict) continue;
+      grid[r][c] = { kind: 'germ', color: color };
+      placed++;
+    }
+    germsRemaining = placed;
+  }
+
+  function startLevel(newGermCount, keepScore) {
+    grid = emptyGrid();
+    active = null;
+    if (!keepScore) score = 0;
+    comboLevel = 0;
+    placeGerms(newGermCount);
+    scoreValueEl.textContent = String(score);
+    germValueEl.textContent = String(germsRemaining);
+    gameRunning = true;
+    startScreen.classList.add('hidden');
+    endScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    clearInterval(fallTimerId);
+    fallTimerId = setInterval(tick, fallDelay);
+    render();
+    spawnPiece();
+  }
+
+  startBtn.addEventListener('click', function () {
+    ensureAudio();
+    startLevel(germCount, false);
+  });
+  continueBtn.addEventListener('click', function () {
+    ensureAudio();
+    if (wonLastRound) {
+      germCount = Math.min(germCount + 8, 70);
+      startLevel(germCount, true);
+    } else {
+      startLevel(germCount, false);
+    }
+  });
+  menuBtn.addEventListener('click', function () {
+    endScreen.classList.add('hidden');
+    startScreen.classList.remove('hidden');
+  });
+
+  function spawnPiece() {
+    var pc = Math.floor(COLS / 2) - 1;
+    active = { pr: 0, pc: pc, rotIndex: 0, color1: nextColors[0], color2: nextColors[1] };
+    nextColors = [randColor(), randColor()];
+    renderNextPreview();
+    if (!canPlacePiece(grid, active.pr, active.pc, active.rotIndex)) {
+      active = null;
+      gameOver();
+      return;
+    }
+    render();
+  }
+
+  function tick() {
+    if (!active || !gameRunning) return;
+    softDropStep();
+  }
+
+  function softDropStep() {
+    if (!active) return;
+    var np = active.pr + 1;
+    if (canPlacePiece(grid, np, active.pc, active.rotIndex)) {
+      active.pr = np;
+      render();
+    } else {
+      lockPiece();
+    }
+  }
+  function moveHoriz(delta) {
+    if (!active) return;
+    var nc = active.pc + delta;
+    if (canPlacePiece(grid, active.pr, nc, active.rotIndex)) {
+      active.pc = nc;
+      render();
+    }
+  }
+  function rotatePiece() {
+    if (!active) return;
+    var res = tryRotateState(grid, active.pr, active.pc, active.rotIndex);
+    if (res) {
+      active.pr = res.pr; active.pc = res.pc; active.rotIndex = res.rotIndex;
+      render();
+    }
+  }
+  function hardDrop() {
+    if (!active) return;
+    var bonus = 0;
+    while (canPlacePiece(grid, active.pr + 1, active.pc, active.rotIndex)) {
+      active.pr += 1;
+      bonus += 2;
+    }
+    score += bonus;
+    lockPiece();
+  }
+
+  function lockPiece() {
+    if (!active) return;
+    playLock();
+    var o = otherCell(active.pr, active.pc, active.rotIndex);
+    grid[active.pr][active.pc] = { kind: 'pill', color: active.color1 };
+    grid[o.r][o.c] = { kind: 'pill', color: active.color2 };
+    active = null;
+    render();
+    resolveBoard();
+  }
+
+  function resolveBoard() {
+    var matched = findMatches(grid);
+    if (matched.size === 0) {
+      comboLevel = 0;
+      if (germsRemaining <= 0) { winLevel(); }
+      else { spawnPiece(); }
+      return;
+    }
+    comboLevel++;
+    matched.forEach(function (key) {
+      var parts = key.split(',');
+      var r = parseInt(parts[0], 10), c = parseInt(parts[1], 10);
+      cellEls[r][c].classList.add('clearing');
+    });
+    playClear();
+    setTimeout(function () {
+      var germsCleared = 0;
+      matched.forEach(function (key) {
+        var parts = key.split(',');
+        var r = parseInt(parts[0], 10), c = parseInt(parts[1], 10);
+        if (grid[r][c] && grid[r][c].kind === 'germ') germsCleared++;
+        grid[r][c] = null;
+      });
+      germsRemaining -= germsCleared;
+      score += germsCleared * 100 * comboLevel;
+      scoreValueEl.textContent = String(score);
+      germValueEl.textContent = String(Math.max(0, germsRemaining));
+      bumpEl(scoreValueEl);
+      settleGravity(grid);
+      render();
+      resolveBoard();
+    }, 200);
+  }
+
+  function bumpEl(el) {
+    el.classList.remove('bump');
+    void el.offsetWidth;
+    el.classList.add('bump');
+  }
+
+  function winLevel() {
+    gameRunning = false;
+    wonLastRound = true;
+    clearInterval(fallTimerId);
+    playWin();
+    if (score > bestScore) { bestScore = score; try { localStorage.setItem('glassClinic_bestScore', String(bestScore)); } catch (e) {} }
+    refreshBest();
+    endIcon.textContent = '🎉';
+    endTitle.textContent = 'شیشه پاک شد!';
+    endMsg.textContent = 'همه‌ی میکروب‌ها درمان شدن.';
+    finalScoreEl.textContent = String(score);
+    continueBtn.textContent = 'سطح بعدی';
+    gameScreen.classList.add('hidden');
+    endScreen.classList.remove('hidden');
+  }
+
+  function gameOver() {
+    gameRunning = false;
+    wonLastRound = false;
+    clearInterval(fallTimerId);
+    playLose();
+    if (score > bestScore) { bestScore = score; try { localStorage.setItem('glassClinic_bestScore', String(bestScore)); } catch (e) {} }
+    refreshBest();
+    endIcon.textContent = '🫙';
+    endTitle.textContent = 'شیشه پر شد!';
+    endMsg.textContent = 'دیگه جا برای کپسول جدید نبود.';
+    finalScoreEl.textContent = String(score);
+    continueBtn.textContent = 'دوباره امتحان کن';
+    gameScreen.classList.add('hidden');
+    endScreen.classList.remove('hidden');
+  }
+
+  function render() {
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        var el = cellEls[r][c];
+        el.className = 'cell';
+        var cellData = grid[r][c];
+        if (cellData) {
+          if (cellData.kind === 'germ') el.classList.add('germ', 'c-' + cellData.color);
+          else el.classList.add('pilldot', 'c-' + cellData.color);
+        }
+      }
+    }
+    if (active) {
+      var o = otherCell(active.pr, active.pc, active.rotIndex);
+      var pivotEl = cellEls[active.pr][active.pc];
+      var otherEl = cellEls[o.r][o.c];
+      pivotEl.className = 'cell piece-' + PIVOT_ROLE[active.rotIndex] + ' c-' + active.color1;
+      otherEl.className = 'cell piece-' + OTHER_ROLE[active.rotIndex] + ' c-' + active.color2;
+    }
+  }
+
+  function renderNextPreview() {
+    var dots = nextCapsEl.querySelectorAll('.dot');
+    dots[0].className = 'dot c-' + nextColors[0];
+    dots[1].className = 'dot c-' + nextColors[1];
+  }
+
+  function makeRepeater(action) {
+    var intervalId = null, timeoutId = null;
+    function start() {
+      if (!gameRunning) return;
+      action();
+      timeoutId = setTimeout(function () { intervalId = setInterval(action, 70); }, 220);
+    }
+    function stop() { clearTimeout(timeoutId); clearInterval(intervalId); }
+    return { start: start, stop: stop };
+  }
+  var repLeft = makeRepeater(function () { moveHoriz(-1); });
+  var repRight = makeRepeater(function () { moveHoriz(1); });
+  var repDown = makeRepeater(function () { softDropStep(); });
+
+  function wireHold(elId, rep, tapAction) {
+    var el = document.getElementById(elId);
+    el.addEventListener('pointerdown', function (e) { e.preventDefault(); rep ? rep.start() : tapAction(); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (evt) {
+      el.addEventListener(evt, function () { if (rep) rep.stop(); });
+    });
+  }
+  wireHold('btnLeft', repLeft, null);
+  wireHold('btnRight', repRight, null);
+  wireHold('btnDown', repDown, null);
+  document.getElementById('btnRotate').addEventListener('pointerdown', function (e) { e.preventDefault(); rotatePiece(); });
+
+  var heldKeys = {};
+  document.addEventListener('keydown', function (e) {
+    if (!gameRunning) return;
+    if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].indexOf(e.key) !== -1) e.preventDefault();
+    if (heldKeys[e.key]) return;
+    heldKeys[e.key] = true;
+    if (e.key === 'ArrowLeft') repLeft.start();
+    else if (e.key === 'ArrowRight') repRight.start();
+    else if (e.key === 'ArrowDown') repDown.start();
+    else if (e.key === 'ArrowUp') rotatePiece();
+    else if (e.key === ' ') hardDrop();
+  });
+  document.addEventListener('keyup', function (e) {
+    heldKeys[e.key] = false;
+    if (e.key === 'ArrowLeft') repLeft.stop();
+    else if (e.key === 'ArrowRight') repRight.stop();
+    else if (e.key === 'ArrowDown') repDown.stop();
+  });
+})();
+</script>
+</body>
+</html>
